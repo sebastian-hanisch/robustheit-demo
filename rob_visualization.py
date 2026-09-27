@@ -17,7 +17,7 @@ def _lines(xy, pairs):
 
 def _corners_trace(xy):
     pad = 0.4
-    return go.Scatter(x=[xy[:, 0].min() - pad, xy[:, 0].max() + pad], y=[xy[:, 1].min() - pad, xy[:, 1].max() + pad], mode="markers", marker=dict(opacity=0), hoverinfo="skip")
+    return go.Scatter(x=[xy[:, 0].min() - pad, xy[:, 0].max() + pad], y=[xy[:, 1].min() - pad, xy[:, 1].max() + pad], mode="markers", marker=dict(opacity=0), hoverinfo="skip", showlegend=False)
 
 
 # --- 1 · Angriff in Aktion ------------------------------------------------------------------------------------------------------------------------------
