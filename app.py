@@ -52,7 +52,7 @@ zusammenfassende Kennzahl je Strategie/Netz dient der **Robustheitsindex** R = (
 """
 )
 st.caption(
-    "Kind der Strukturkennzahlen-Demo (achtes Stück der Graphen-und-Netzwerke-Reihe); geplante Nachfolger (nicht gebaut): Kaskaden und Ausbreitung, kritische Knoten härten. Abgrenzung: Stück 1 "
+    "Kind der Strukturkennzahlen-Demo (achtes Stück der Graphen-und-Netzwerke-Reihe); Nachfolger: Kaskaden und Ausbreitung (Stück 9), kritische Knoten härten (Stück 10). Abgrenzung: Stück 1 "
     "(BFS und DFS) hat schon einmal eine Perkolationsschwelle gemessen, aber dort wurden zufällig KANTEN gesperrt (Bond-Perkolation) - hier werden KNOTEN entfernt (Site-Perkolation), eine "
     "verwandte, aber eigene Frage."
 )
@@ -259,6 +259,6 @@ Implementiert in `rob_algorithm.py` (Entfernungsstrategien, S(k), Perkolationssc
 st.markdown("---")
 st.caption(
     "Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – "
-    "Operations Research und Machine Learning. Interesse an einer maßgeschneiderten Lösung für "
-    "Ihr Unternehmen? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html)"
+    "Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). "
+    "Mehr zur Reihe: [Graphen und Netzwerke: BFS bis Cliquenbandbreite](https://sebastianhanisch.net/konzepte-graphen-netzwerke.html)."
 )

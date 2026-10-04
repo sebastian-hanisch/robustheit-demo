@@ -82,14 +82,14 @@ PRESETS = {
 }
 PRESET_HELP = {
     "Barbell-Lehrbuch (ein Treffer trennt sofort)": "16 Knoten (k=8): der gezielte Grad-Angriff entfernt zuerst ein Brückenende (Grad 8, höchster Grad im Graphen) - der Graph zerfällt SOFORT (nach "
-                                                     "nur 1 Entfernung) in Stücke der Größe 7 und 8. Eine zufällige Reihenfolge trifft eines der beiden Brückenenden dagegen erst im Mittel nach "
-                                                     "(n-2)/3=4.7 Entfernungen.",
+                                                     "nur 1 Entfernung) in Stücke der Größe 7 und 8. Eine zufällige Reihenfolge trifft eines der beiden Brückenenden dagegen erst im Mittel bei der "
+                                                     "(n+1)/3=5.7. Entfernung (davor im Mittel (n-2)/3=4.7 unschädliche).",
     "Betriebsnetz Standardfall": "100 Kreuzungen, 144 Straßen (20% gesperrt): R(Zufall)=0.3198 gegen R(Grad-adaptiv)=0.2055 - ÜBERRASCHUNG: schon hier ein MESSBARER Unterschied (nicht \"kaum "
                                   "Unterschied\", wie oft vermutet), weil das Sperren die Gradverteilung uneinheitlich macht. Betweenness-adaptiv ist hier sogar am verheerendsten (R=0.1679).",
     "Skalenfrei robust gegen Zufall": "150 Knoten, 296 Kanten: unter rein zufälligem Ausfall bleibt die Riesenkomponente lange groß (R=0.4065, höher als beim Betriebsnetz mit R=0.3198 trotz mehr "
                                        "Kanten) - die Hubs werden selten getroffen, wenn zufällig gewählt wird.",
     "Skalenfrei fragil gegen gezielten Angriff": "Dieselbe Instanz, jetzt Grad-adaptiv: R fällt auf 0.1112 - der mit Abstand größte Zufall/gezielt-Kontrast aller drei Vehikel (Gap 0.30, gegen nur "
-                                                  "0.09 beim Betriebsnetz) - der Albert-Jeong-Barabási-Befund (Nature 2000) gemessen, nicht nur behauptet.",
+                                                  "0.09 beim Betriebsnetz; jeweils Mittel über 30 Zufallsreihenfolgen minus Grad-adaptiv) - der Albert-Jeong-Barabási-Befund (Nature 2000) gemessen, nicht nur behauptet.",
     "Perkolationsschwelle ER gegen Cohen-Formel": "400 Knoten, 760 Kanten, <k>=3.8: Cohens Vorhersage f_c=1-1/<k>=0.737. Bei der kleinen 5%-Schwelle (nahe am asymptotischen \"Verschwinden\") liegt "
                                                    "die Messung nur 0.01-0.03 daneben (endliche Größe) - bei der allgemeinen 50%-Schwelle der App dagegen 0.30+ daneben, weil das etwas anderes misst "
                                                    "(s. Design-Entscheidung im README).",

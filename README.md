@@ -14,9 +14,9 @@ Abgrenzung: Stück 1 ([bfs-dfs-demo](https://github.com/sebastian-hanisch/bfs-df
  ├─ 3 Starke Zusammenhangskomponenten, topologische Sortierung                [gebaut: scc-demo]
  ├─ 5 Graphfärbung                                                            [gebaut: graph-coloring-demo]
  ├─ 6 Zentralität ─ 7 Strukturkennzahlen ─ 8 Robustheit                       [gebaut: centrality-demo, strukturkennzahlen-demo, robustheit-demo ─ DIESES STÜCK]
- │        │        └─ 9 Kaskaden und Ausbreitung                              [nicht gebaut]
- │        └─ 10 Kritische Knoten härten                                       [nicht gebaut]
- └─ 11 Bandbreite ─ 12 Bandbreite von G(n,k,b) und Cliquenüberdeckung         [nicht gebaut]
+ │        │        └─ 9 Kaskaden und Ausbreitung                              [gebaut: kaskaden-demo]
+ │        └─ 10 Kritische Knoten härten                                       [gebaut: haertung-demo]
+ └─ 11 Bandbreite ─ 12 Bandbreite von G(n,k,b) und Cliquenüberdeckung         [gebaut: bandbreite-demo, cliquenbandbreite-demo]
 ```
 
 Ergebnis in Kürze: Auf dem **skalenfreien Netz** (Barabási-Albert) fällt der Robustheitsindex von R=0.4065 (Zufall) auf **R=0.1112 (Grad-adaptiv)** – der mit Abstand größte Zufall/gezielt-Kontrast aller drei Vehikel, genau der Albert-Jeong-Barabási-Befund. Eine **echte Überraschung**: schon auf dem Betriebsnetz (Straßenraster, 20 % gesperrt) ist der Unterschied MESSBAR (R=0.3198 gegen R=0.2055), nicht "kaum vorhanden", wie die Ausgangs-Hypothese vermutete – und dort schlägt **Betweenness-adaptiv sogar den Grad-Angriff** (R=0.1679), während auf dem skalenfreien Netz und dem Barbell-Graphen umgekehrt Grad-adaptiv knapp die Nase vorn hat. Kein einheitlicher Sieger zwischen Grad und Betweenness – gemessen, nicht angenommen.
@@ -34,12 +34,12 @@ Ein Netz mit hoher Gradheterogenität (wenige Knoten mit sehr vielen Verbindunge
 | Hypothese | Ergebnis |
 |---|---|
 | **H1** S(k), Perkolationsschwelle, Robustheitsindex stimmen mit unabhängiger networkx-Neuberechnung überein. | ✅ Bestätigt: S(k) gegen `networkx.connected_components` nach JEDER Entfernungsstufe auf >380 Instanzen, alle vier Strategien. |
-| **H2** Auf dem Betriebsnetz (enge, fast reguläre Gradverteilung) macht es kaum einen Unterschied, welchen Knoten man entfernt. | ❌ **Widerlegt (Überraschung):** R(Zufall)=0.3198 gegen R(Grad-adaptiv)=0.2055 – ein MESSBARER Unterschied (Gap 0.09), weil das Sperren von 20 % der Straßen die Gradverteilung uneinheitlich macht. Kleiner als beim skalenfreien Netz (Gap 0.30), aber klar vorhanden. |
+| **H2** Auf dem Betriebsnetz (enge, fast reguläre Gradverteilung) macht es kaum einen Unterschied, welchen Knoten man entfernt. | ❌ **Widerlegt (Überraschung):** R(Zufall)=0.3198 gegen R(Grad-adaptiv)=0.2055 – ein MESSBARER Unterschied (Gap 0.09 gegen das Mittel über 30 Zufallsreihenfolgen; R(Zufall)=0.3198 ist die einzelne Reihenfolge des Standardfalls), weil das Sperren von 20 % der Straßen die Gradverteilung uneinheitlich macht. Kleiner als beim skalenfreien Netz (Gap 0.30), aber klar vorhanden. |
 | **H3** Das skalenfreie Netz ist robust gegen Zufall, aber fragil gegen gezielten Angriff (Albert, Jeong & Barabási 2000). | ✅ Bestätigt, der größte Kontrast aller drei Vehikel: R fällt von 0.4065 (Zufall) auf 0.1112 (Grad-adaptiv). |
 | **H4** Grad-adaptiv entfernt bei jedem Schritt exakt den aktuell höchstgradigen Restknoten (kein Rescan-Ersatz mit Fehlern). | ✅ Bestätigt als Satz, gegen Brute-Force-Neuberechnung auf kleinen Instanzen und auf einer konstruierten Instanz, die Grad-statisch nachweislich hereinlegt. |
 | **H5** Betweenness-adaptiv ist grundsätzlich verheerender als Grad-adaptiv (Betweenness ist die "bessere" Zentralität). | ❌ **Widerlegt:** kein einheitlicher Sieger. Betweenness gewinnt auf dem Betriebsnetz (R=0.1679 gegen 0.2055), verliert aber knapp auf dem skalenfreien Netz (0.1148 gegen 0.1112) und deutlich auf dem Barbell (0.3320 gegen 0.2500 – nach dem Kappen der Brücke bleibt keine Betweenness-Information mehr übrig). |
-| **H6** Die gemessene Perkolationsschwelle eines ER-Netzes liegt nahe an Cohens f_c=1−1/⟨k⟩. | ⚠️ **Nur bei der richtigen Definition:** bei der kleinen 5 %-Schwelle ja (Abweichung 0.004–0.03, endliche Größe). Bei der allgemeinen 50 %-Schwelle NEIN (Abweichung >0.28, strukturell – s. Design-Entscheidung oben). |
-| **H7** Der Barbell-Graph zeigt den Zufall/gezielt-Kontrast am dramatischsten (ein einziger Treffer zerlegt ihn). | ✅ Bestätigt als Satz: der gezielte Angriff trennt den Graphen nach GENAU 1 Entfernung in Stücke der Größe k−1 und k; eine zufällige Reihenfolge trifft ein Brückenende erst im Mittel nach (n−2)/3 Entfernungen. |
+| **H6** Die gemessene Perkolationsschwelle eines ER-Netzes liegt nahe an Cohens f_c=1−1/⟨k⟩. | ⚠️ **Nur bei der richtigen Definition:** bei der kleinen 5 %-Schwelle ja (Abweichung 0.007–0.033, endliche Größe). Bei der allgemeinen 50 %-Schwelle NEIN (Abweichung >0.28, strukturell – s. Design-Entscheidung oben). |
+| **H7** Der Barbell-Graph zeigt den Zufall/gezielt-Kontrast am dramatischsten (ein einziger Treffer zerlegt ihn). | ✅ Bestätigt als Satz: der gezielte Angriff trennt den Graphen nach GENAU 1 Entfernung in Stücke der Größe k−1 und k; eine zufällige Reihenfolge trifft ein Brückenende erst im Mittel bei der (n+1)/3-ten Entfernung (davor im Mittel (n−2)/3 unschädliche). |
 | **H8** R(Grad-adaptiv) ist nie größer als der Mittelwert von R(Zufall) über viele Zufallsreihenfolgen. | ✅ Bestätigt (Mittelwert-Aussage) auf jeder gemessenen Instanz – NICHT als Aussage über jede einzelne Zufallsfolge behauptet, da eine einzelne glückliche zufällige Ziehung gelegentlich auch früh Hubs treffen kann. |
 
 ## Befunde (gemessen, keine Behauptungen)
@@ -55,13 +55,13 @@ Seed 35, Standardeinstellungen sofern nicht anders angegeben; alle Verfahren sin
 | **R-Vergleich der drei Vehikel** (Zufall = Mittel über 30 Reihenfolgen, gegen Grad-adaptiv) | Betriebsnetz-Gap 0.090, Barbell-Gap 0.104, **Skalenfrei-Gap 0.300 (3× größer als beim Betriebsnetz)** |
 | **Perkolationsschwelle ER gegen Cohen (n=400, kleine 5 %-Schwelle)** | ⟨k⟩=3: vorhergesagt 0.667, gemessen 0.700 (−0.033) — ⟨k⟩=4: 0.750 gegen 0.757 (−0.007) — ⟨k⟩=6: 0.833 gegen 0.822 (+0.012) — ⟨k⟩=8: 0.875 gegen 0.850 (+0.025) |
 | **Perkolationsschwelle ER gegen Cohen (allgemeine 50 %-Schwelle)** | bei jedem ⟨k⟩ 0.30–0.38 UNTER der Cohen-Vorhersage – struktureller Definitionsunterschied, kein Rauschen (s. Design-Entscheidung) |
-| **Barbell von Hand** (k=8) | gezielter Angriff trennt nach 1 Entfernung in Stücke der Größe 7 und 8; Zufallsreihenfolge trifft ein Brückenende im Mittel nach 4.7 Entfernungen ((n−2)/3=14/3) |
+| **Barbell von Hand** (k=8) | gezielter Angriff trennt nach 1 Entfernung in Stücke der Größe 7 und 8; Zufallsreihenfolge trifft ein Brückenende im Mittel erst bei der 5.7. Entfernung ((n+1)/3=17/3; davor im Mittel (n−2)/3=14/3=4.7 unschädliche) |
 
 Presets (8), alle mit den Zahlen in ihren Hilfetexten (`tests/test_presets.py`):
 
 | Preset | Was es zeigt |
 |---|---|
-| Barbell-Lehrbuch (ein Treffer trennt sofort) | k=8: gezielter Angriff trennt sofort in 7+8, Zufall trifft im Mittel erst nach 4.7 Entfernungen |
+| Barbell-Lehrbuch (ein Treffer trennt sofort) | k=8: gezielter Angriff trennt sofort in 7+8, Zufall trifft im Mittel erst bei der 5.7. Entfernung (davor 4.7 unschädliche) |
 | Betriebsnetz Standardfall | R(Zufall)=0.3198 gegen R(Grad-adaptiv)=0.2055 – messbarer, aber kleinerer Unterschied als beim skalenfreien Netz |
 | Skalenfrei robust gegen Zufall | R(Zufall)=0.4065 – die Riesenkomponente übersteht zufälligen Ausfall lange |
 | Skalenfrei fragil gegen gezielten Angriff | R(Grad-adaptiv)=0.1112 – der größte Zufall/gezielt-Kontrast aller drei Netze |
@@ -135,3 +135,7 @@ venv\Scripts\streamlit run app.py
 - Brandes, U. (2001). *A faster algorithm for betweenness centrality.* Journal of Mathematical Sociology 25(2), 163–177.
 
 Gebaut mit Streamlit, Plotly, NumPy und pandas.
+
+---
+
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Graphen und Netzwerke: BFS bis Cliquenbandbreite](https://sebastianhanisch.net/konzepte-graphen-netzwerke.html).
