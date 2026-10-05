@@ -223,7 +223,9 @@ def betweenness_order_adaptive(adj, recompute_every=1):
         cur = current_adj()
         node_between, _, _ = betweenness_brandes(cur)
         alive_nodes = [v for v in range(n) if alive[v]]
-        return sorted(alive_nodes, key=lambda v: (-node_between[v], v))
+        # Gleichstand nach kleinstem Index: Betweenness-Werte, die mathematisch gleich sind, unterscheiden sich in Gleitkommazahlen oft um 1e-13 (Summationsreihenfolge) - ohne Rundung
+        # entschiede dieses Rauschen statt des Index (z. B. Würfel, Dodekaeder, zirkulante Graphen); Rundung auf 9 Stellen beseitigt das, echte Unterschiede sind viel größer.
+        return sorted(alive_nodes, key=lambda v: (-round(node_between[v], 9), v))
 
     while any(alive):
         if since_recompute >= recompute_every:

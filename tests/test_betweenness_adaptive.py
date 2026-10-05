@@ -4,11 +4,40 @@ Mit `recompute_every=1` muss die Strategie bei JEDEM einzelnen Schritt exakt der
 `recompute_every>1` muss sie die zuletzt berechnete Rangfolge korrekt unter den noch vorhandenen Knoten weiterverwenden (explizite, dokumentierte Näherung) - hier gegen eine unabhängige
 Referenzimplementierung geprüft, die das Carry-Forward-Verhalten von Hand nachbildet."""
 
+from collections import deque
+from fractions import Fraction
+
 import networkx as nx
 import pytest
 
 import rob_algorithm as A
 import rob_scenario as S
+
+
+def _exact_betweenness(nb):
+    """Knoten-Betweenness EXAKT rational (Fractions, Brandes-Rückwärtsphase in exakter Arithmetik): mathematisch gleiche Werte sind hier gleich, anders als in Gleitkommazahlen (Rauschen ~1e-13 würde
+    sonst die Gleichstandsregel "kleinster Index" verfälschen)."""
+    n = len(nb)
+    bc = [Fraction(0)] * n
+    for s in range(n):
+        dist, sigma, pred, order, q = {s: 0}, {s: 1}, {s: []}, [], deque([s])
+        while q:
+            u = q.popleft()
+            order.append(u)
+            for v in nb[u]:
+                if v not in dist:
+                    dist[v], sigma[v], pred[v] = dist[u] + 1, 0, []
+                    q.append(v)
+                if dist[v] == dist[u] + 1:
+                    sigma[v] += sigma[u]
+                    pred[v].append(u)
+        delta = {v: Fraction(0) for v in order}
+        for w in reversed(order):
+            for v in pred[w]:
+                delta[v] += Fraction(sigma[v], sigma[w]) * (1 + delta[w])
+            if w != s:
+                bc[w] += delta[w]
+    return [x / 2 for x in bc]
 
 
 def _induced_subgraph_adj(adj, alive_set):
@@ -36,7 +65,7 @@ def _reference_betweenness_adaptive(adj, recompute_every):
     while alive:
         if since >= recompute_every:
             sub_adj, remaining = _induced_subgraph_adj(adj, alive)
-            node_between, _, _ = A.betweenness_brandes(sub_adj)
+            node_between = _exact_betweenness(sub_adj)
             ranking = sorted(remaining, key=lambda v: (-node_between[remaining.index(v)], v))
             since = 0
         else:

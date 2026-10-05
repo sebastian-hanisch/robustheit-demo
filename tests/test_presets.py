@@ -46,7 +46,7 @@ def test_betriebsnetz_standardfall_preset_numbers():
     a_adaptive = ev.analyse(ev.Settings(kind="city", side=10, blocked=0.2, nettype="grid", strategy="degree_adaptive", seed=35))[1]
     assert round(a_adaptive.robustness, 4) == 0.2055
     a_bet = ev.analyse(ev.Settings(kind="city", side=10, blocked=0.2, nettype="grid", strategy="betweenness_adaptive", seed=35))[1]
-    assert round(a_bet.robustness, 4) == 0.1679
+    assert round(a_bet.robustness, 4) == 0.1666
     assert a_bet.robustness < a_adaptive.robustness                     # Betweenness-adaptiv ist hier verheerender als Grad-adaptiv
 
 
@@ -70,7 +70,7 @@ def test_perkolationsschwelle_preset_numbers():
 def test_grad_gegen_betweenness_betriebsnetz_preset():
     a_deg = ev.analyse(ev.Settings(kind="city", side=10, blocked=0.2, nettype="grid", strategy="degree_adaptive", seed=35))[1]
     a_bet = ev.analyse(ev.Settings(kind="city", side=10, blocked=0.2, nettype="grid", strategy="betweenness_adaptive", seed=35))[1]
-    assert round(a_deg.robustness, 4) == 0.2055 and round(a_bet.robustness, 4) == 0.1679
+    assert round(a_deg.robustness, 4) == 0.2055 and round(a_bet.robustness, 4) == 0.1666
 
 
 def test_drei_netze_vergleich_preset_gaps():

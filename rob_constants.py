@@ -52,7 +52,7 @@ N_RANDOM_ORDERS_FOR_MEAN = 30
 
 # --- Gemessene Werte (Seed 35, sofern nicht anders angegeben; alle Verfahren sind deterministisch, die Instanzen kommen aus Python-`random` mit festem
 # --- Seed und ändern sich nie mit einer Bibliotheksversion; 2026-09-27, alle Werte über ev.*/A.* nachgerechnet, s. tests/test_claims.py) ------------------
-# R JE STRATEGIE, STANDARDFALL: Betriebsnetz (n=100,m=144) R(Zufall)=0.3198, R(Grad-statisch)=0.2972, R(Grad-adaptiv)=0.2055, R(Betweenness-adaptiv)=0.1679
+# R JE STRATEGIE, STANDARDFALL: Betriebsnetz (n=100,m=144) R(Zufall)=0.3198, R(Grad-statisch)=0.2972, R(Grad-adaptiv)=0.2055, R(Betweenness-adaptiv)=0.1666
 #   -- ÜBERRASCHUNG: schon auf dem Betriebsnetz ist der Unterschied Zufall/gezielt MESSBAR (nicht "kaum Unterschied", wie die Ausgangs-Hypothese vermutete),
 #   weil das Sperren von 20% der Straßen die Gradverteilung uneinheitlich macht; Betweenness-adaptiv ist hier sogar VERHEERENDER als Grad-adaptiv (findet
 #   Bruecken/Engstellen, die reiner Grad nicht sieht). Skalenfreies Netz (n=150,m=296) R(Zufall)=0.4065, R(Grad-adaptiv)=0.1112 -- der mit Abstand GRÖSSTE
@@ -61,7 +61,7 @@ N_RANDOM_ORDERS_FOR_MEAN = 30
 #   gap=0.1038, Skalenfreies Netz gap=0.2999 -- der Skalenfrei-Abstand ist 3x größer als beim Betriebsnetz: robust gegen Zufall, fragil gegen gezielten
 #   Angriff, GEMESSEN, nicht nur behauptet.
 # GRAD- GEGEN BETWEENNESS-ANGRIFF (offene Frage der Messreihe, hier beantwortet): KEIN einheitlicher Sieger. Auf dem Betriebsnetz schlägt Betweenness-adaptiv
-#   Grad-adaptiv klar (R 0.1679 gegen 0.2055). Auf dem skalenfreien Netz und dem Barbell gewinnt dagegen Grad-adaptiv knapp (Skalenfrei: 0.1112 gegen 0.1148;
+#   Grad-adaptiv klar (R 0.1666 gegen 0.2055). Auf dem skalenfreien Netz und dem Barbell gewinnt dagegen Grad-adaptiv knapp (Skalenfrei: 0.1112 gegen 0.1148;
 #   Barbell: 0.2500 gegen 0.3320 -- dort verliert Betweenness deutlich, weil nach dem Kappen der Brücke keine Betweenness-Information mehr übrig bleibt und
 #   die Näherung dann arbiträr weiterwählt). Grad ist also nicht grundsätzlich schwächer als Betweenness, wie man vielleicht erwarten würde.
 # PERKOLATIONSSCHWELLE ER GEGEN COHEN-FORMEL (n=400, 12 Seeds, PERCOLATION_FRAC_VANISH=0.05 -- s. Design-Entscheidung unten): <k>=3 vorhergesagt 0.6667,
@@ -85,7 +85,7 @@ PRESET_HELP = {
                                                      "nur 1 Entfernung) in Stücke der Größe 7 und 8. Eine zufällige Reihenfolge trifft eines der beiden Brückenenden dagegen erst im Mittel bei der "
                                                      "(n+1)/3=5.7. Entfernung (davor im Mittel (n-2)/3=4.7 unschädliche).",
     "Betriebsnetz Standardfall": "100 Kreuzungen, 144 Straßen (20% gesperrt): R(Zufall)=0.3198 gegen R(Grad-adaptiv)=0.2055 - ÜBERRASCHUNG: schon hier ein MESSBARER Unterschied (nicht \"kaum "
-                                  "Unterschied\", wie oft vermutet), weil das Sperren die Gradverteilung uneinheitlich macht. Betweenness-adaptiv ist hier sogar am verheerendsten (R=0.1679).",
+                                  "Unterschied\", wie oft vermutet), weil das Sperren die Gradverteilung uneinheitlich macht. Betweenness-adaptiv ist hier sogar am verheerendsten (R=0.1666).",
     "Skalenfrei robust gegen Zufall": "150 Knoten, 296 Kanten: unter rein zufälligem Ausfall bleibt die Riesenkomponente lange groß (R=0.4065, höher als beim Betriebsnetz mit R=0.3198; mittlerer Grad 3.9 "
                                        "gegen 2.9) - die Hubs werden selten getroffen, wenn zufällig gewählt wird.",
     "Skalenfrei fragil gegen gezielten Angriff": "Dieselbe Instanz, jetzt Grad-adaptiv: R fällt auf 0.1112 - der mit Abstand größte Zufall/gezielt-Kontrast aller drei Vehikel (Gap 0.30, gegen nur "
@@ -95,7 +95,7 @@ PRESET_HELP = {
                                                    "(s. Design-Entscheidung im README).",
     "Statisch gegen adaptiv (Skalenfrei)": "Auf dem skalenfreien Netz unterscheiden sich Grad-statisch (R=0.1195) und Grad-adaptiv (R=0.1112) kaum - die ursprünglichen Hubs bleiben meist auch nach "
                                             "ein paar Entfernungen noch die höchstgradigen Knoten.",
-    "Grad- gegen Betweenness-Angriff (Betriebsnetz)": "Hier schlägt Betweenness-adaptiv (R=0.1679) den Grad-Angriff (R=0.2055) klar - auf dem skalenfreien Netz und dem Barbell ist es dagegen "
+    "Grad- gegen Betweenness-Angriff (Betriebsnetz)": "Hier schlägt Betweenness-adaptiv (R=0.1666) den Grad-Angriff (R=0.2055) klar - auf dem skalenfreien Netz und dem Barbell ist es dagegen "
                                                        "umgekehrt (s. README): kein einheitlicher Sieger.",
     "Drei-Netze-Vergleich": "Die R-Tabelle nebeneinander: Betriebsnetz-Gap 0.09, Barbell-Gap 0.10, Skalenfrei-Gap 0.30 (Zufall-Mittel minus Grad-adaptiv) - der Albert-Jeong-Barabási-Kontrast auf "
                             "einen Blick.",
