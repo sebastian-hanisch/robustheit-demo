@@ -33,7 +33,7 @@ def test_readme_network_comparison_core_claim():
     barbell = ev.Settings(kind="barbell", k_barbell=8, seed=35)
     rows = ev.network_comparison(city, ba, barbell, seed=35, n_random_orders=C.N_RANDOM_ORDERS_FOR_MEAN)
     by_label = {r["label"]: r for r in rows}
-    assert by_label["Skalenfrei"]["gap"] > 2.5 * by_label["Betriebsnetz"]["gap"]     # README: "3x groesser"
+    assert by_label["Skalenfrei"]["gap"] > 3 * by_label["Betriebsnetz"]["gap"]       # README: "3x groesser" (deterministisch, Seed 35)
     assert by_label["Skalenfrei"]["gap"] > 2.5 * by_label["Barbell"]["gap"]
 
 
@@ -47,7 +47,7 @@ def test_readme_betriebsnetz_is_not_hardly_different_hypothesis_is_refuted():
 
 
 def test_readme_degree_vs_betweenness_no_uniform_winner():
-    """README-Befund: kein einheitlicher Sieger zwischen Grad-adaptiv und Betweenness-adaptiv - je nach Netz gewinnt der eine oder der andere."""
+    """README-Befund: kein einheitlicher Sieger zwischen Grad-adaptiv und Betweenness-adaptiv - je nach Netz gewinnt der eine oder der andere (bei Neuberechnungsintervall 5, der Voreinstellung)."""
     settings_pairs = [
         ("Betriebsnetz", ev.Settings(kind="city", side=10, blocked=0.2, nettype="grid", seed=35)),
         ("Skalenfrei", ev.Settings(kind="ba", n_ba=150, m_ba=2, m0_ba=4, seed=35)),

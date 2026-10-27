@@ -37,7 +37,7 @@ STEPS = {1: "1 · Angriff in Aktion", 2: "2 · Riesenkomponente über den entfer
 # PERCOLATION_FRAC (0.5, "Riesenkomponente auf die Haelfte des Netzes gefallen") ist die griffige, allgemeine Anzeige-Schwelle in der App (Schritt 2 markiert
 # sie in der S(f)-Kurve). WICHTIG (Design-Entscheidung, s. README "Design-Entscheidung"): diese 0.5-Schwelle ist NICHT direkt mit Cohens f_c=1-1/<k> vergleichbar
 # -- f_c beschreibt, wann die Riesenkomponente asymptotisch VERSCHWINDET (ihr Anteil geht gegen 0), waehrend "auf 50% gefallen" schon deutlich FRUEHER eintritt,
-# weil die Riesenkomponente kontinuierlich schrumpft (kein Sprung). Der Abstand zwischen beiden ist bei <k>=3..8 ca. 0.31-0.38 -- ein STRUKTURELLER Unterschied
+# weil die Riesenkomponente kontinuierlich schrumpft (kein Sprung). Der Abstand zwischen beiden ist bei <k>=3..8 ca. 0.30-0.38 -- ein STRUKTURELLER Unterschied
 # der Definitionen, kein endliche-Groesse-Rauschen (nachgerechnet mit der Mean-Field-Selbstkonsistenzgleichung, s. tests/test_evaluation.py). Fuer den Vergleich
 # GEGEN die Cohen-Formel wird darum die deutlich kleinere PERCOLATION_FRAC_VANISH verwendet ("Riesenkomponente auf einen kleinen Rest gefallen" - naeher am
 # asymptotischen "verschwindet"), bei der die verbleibende Abweichung tatsaechlich ein endliche-Groesse-Effekt ist (schrumpft mit kleinerem frac gegen 0).
@@ -96,7 +96,7 @@ PRESET_HELP = {
     "Statisch gegen adaptiv (Skalenfrei)": "Auf dem skalenfreien Netz unterscheiden sich Grad-statisch (R=0.1195) und Grad-adaptiv (R=0.1112) kaum - die ursprünglichen Hubs bleiben meist auch nach "
                                             "ein paar Entfernungen noch die höchstgradigen Knoten.",
     "Grad- gegen Betweenness-Angriff (Betriebsnetz)": "Hier schlägt Betweenness-adaptiv (R=0.1666) den Grad-Angriff (R=0.2055) klar - auf dem skalenfreien Netz und dem Barbell ist es dagegen "
-                                                       "umgekehrt (s. README): kein einheitlicher Sieger.",
+                                                       "umgekehrt (s. README): bei Neuberechnungsintervall 5 (Voreinstellung, Näherung) kein einheitlicher Sieger.",
     "Drei-Netze-Vergleich": "Die R-Tabelle nebeneinander: Betriebsnetz-Gap 0.09, Barbell-Gap 0.10, Skalenfrei-Gap 0.30 (Zufall-Mittel minus Grad-adaptiv) - der Albert-Jeong-Barabási-Kontrast auf "
                             "einen Blick.",
 }

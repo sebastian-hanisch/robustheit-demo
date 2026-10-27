@@ -45,12 +45,27 @@ st.markdown(
 **Achtes Stück der Graphen-und-Netzwerke-Reihe**, Kind der Strukturkennzahlen (Stück 7: dort die Struktur vermessen, jetzt ihre Folgen für den Ausfall). Vier Entfernungsstrategien: **Zufall**,
 **Grad statisch** (Rangfolge einmal aus dem Ausgangsnetz), **Grad adaptiv** (Cohen, Erez, ben-Avraham & Havlin 2001: nach jeder Entfernung neu der aktuell höchstgradige Restknoten - trifft immer
 den NEUEN Hub, sobald der alte weg ist), **Betweenness adaptiv** (dieselbe Idee mit der aktuellen Betweenness, Brandes 2001). Der klassische Befund (Albert, Jeong & Barabási 2000, Nature 406,
-378–382): **skalenfreie Netze sind erstaunlich robust gegen zufälligen Ausfall, aber sehr verwundbar gegen gezielten Angriff auf ihre Hubs** - bei einem Netz mit enger Gradverteilung macht es dagegen
-kaum Unterschied, welchen Knoten man entfernt (hier gemessen, nicht angenommen - mit einer echten Überraschung, s. unten). Als **Perkolationsschwelle** wird gemessen, ab welchem entfernten Anteil die
+378–382): **skalenfreie Netze sind erstaunlich robust gegen zufälligen Ausfall, aber sehr verwundbar gegen gezielten Angriff auf ihre Hubs** - bei einem Netz mit enger Gradverteilung war dagegen
+kaum Unterschied erwartet; gemessen ist er kleiner, aber vorhanden (hier gemessen, nicht angenommen - eine echte Überraschung, s. unten). Als **Perkolationsschwelle** wird gemessen, ab welchem entfernten Anteil die
 größte Komponente stark schrumpft; für Erdős-Rényi-artige Netze unter zufälligem Ausfall gibt es eine geschlossene Vorhersage (Cohen, Erez, ben-Avraham & Havlin 2000: f_c = 1 - 1/⟨k⟩). Als
 zusammenfassende Kennzahl je Strategie/Netz dient der **Robustheitsindex** R = (1/n)·Σ S(k)/n (Schneider, Moreira, Andrade, Herrmann & Havlin 2011) - die Fläche unter der Riesenkomponenten-Kurve.
 """
 )
+
+# erklaerseite:einfach:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/netz-robustheit-erklaert.json, nicht von Hand ändern)
+with st.expander("💬 In einfachen Worten"):
+    st.markdown(
+        """
+Stellen Sie sich ein Netz aus Orten und Verbindungen vor, etwa ein Liefernetz. Die Demo entfernt Orte nacheinander und beobachtet, wie lange noch ein großes zusammenhängendes Stück übrig bleibt, in dem jeder Ort jeden erreicht.
+
+Es gibt vier Arten, Orte zu entfernen: zufällig, nach der anfänglichen Zahl ihrer Verbindungen, nach der jeweils aktuellen Zahl ihrer Verbindungen oder nach der Zahl der kürzesten Wege, die über sie laufen (Betweenness). Zufällige Ausfälle treffen in einem Netz mit großen Knotenpunkten vor allem kleine Orte, gezielte Ausfälle die großen.
+
+Die Kennzahl R fasst den ganzen Verlauf in einer Zahl zusammen: Je niedriger sie ist, desto schneller zerfällt das Netz bei dieser Art des Ausfalls. Alle Netze der Demo sind erzeugt, keine echten Daten.
+
+[Ausführlich und verständlich erklärt, mit Fachteil](https://sebastianhanisch.net/netz-robustheit-erklaert.html)
+        """
+    )
+# erklaerseite:einfach:end
 st.caption(
     "Kind der Strukturkennzahlen-Demo (achtes Stück der Graphen-und-Netzwerke-Reihe); Nachfolger: Kaskaden und Ausbreitung (Stück 9), kritische Knoten härten (Stück 10). Abgrenzung: Stück 1 "
     "(BFS und DFS) hat schon einmal eine Perkolationsschwelle gemessen, aber dort wurden zufällig KANTEN gesperrt (Bond-Perkolation) - hier werden KNOTEN entfernt (Site-Perkolation), eine "
@@ -224,6 +239,26 @@ st.markdown(
 st.markdown("---")
 
 with st.expander("📐 Mathematische Formulierung"):
+    # erklaerseite:lesehilfe:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/netz-robustheit-erklaert.json, nicht von Hand ändern)
+    st.markdown(
+        r"""
+**Lesehilfe.** Gegeben ist ein Netz mit $n$ Knoten, aus dem nacheinander Knoten nach einer Strategie entfernt werden. Gesucht ist, wie schnell die größte zusammenhängende Gruppe $S(k)$ schrumpft, gemessen an der Schwelle $f^*$ und am Robustheitsindex $R$.
+
+| Symbol | Bedeutung |
+|---|---|
+| $n$ | Zahl der Knoten im Ausgangsnetz |
+| $k$ | Zahl der bisher entfernten Knoten |
+| $S(k)$ | Größe der größten Zusammenhangskomponente nach $k$ Entfernungen |
+| $\deg(v)$ | Grad von Knoten $v$, also Zahl seiner Kanten im Restnetz |
+| $f^*$ | gemessene Perkolationsschwelle: kleinster entfernter Anteil $k/n$, bei dem $S(k)$ unter $\text{frac}\cdot n$ fällt |
+| $\langle k \rangle$ | mittlerer Grad des Ausgangsnetzes |
+| $f_c$ | Cohens Vorhersage der Schwelle bei zufälligem Ausfall auf Erdős-Rényi-artigen Netzen |
+| $R$ | Robustheitsindex: Fläche unter der normierten Kurve $S(k)/n$ |
+
+[Schritt für Schritt erklärt, mit Herleitung und Literatur](https://sebastianhanisch.net/netz-robustheit-erklaert.html#fachleute)
+        """
+    )
+    # erklaerseite:lesehilfe:end
     st.markdown(
         r"""
 **Riesenkomponente S(k).** Größe der größten Zusammenhangskomponente, nachdem k Knoten (in der gewählten Strategie-Reihenfolge) entfernt wurden. Satz: $S(k) \ge S(k+1)$ für alle $k$ (monoton
